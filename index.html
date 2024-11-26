@@ -33,17 +33,17 @@
                 let start = id * CHUNK_SIZE;
                 let end = start + CHUNK_SIZE;
                 const chunkToSend = ev.target.result.slice(start, end);
-                console.log(chunkToSend.byteLength)
+                // console.log(chunkToSend.byteLength)
                 try {
                     await fetch("http://localhost:8080/upload", {
                         method: "POST",
                         headers: {
                             "content-type": "application/octet-stream",
-                            "file-name": encodeURIComponent(fileName),
+                            "file-name": encodeURIComponent(fileName), // for non-ascii strings like Arablic
                         },
                         body: chunkToSend,
                     });
-                    console.log(CHUNK_COUNT, id);
+                    // console.log(CHUNK_COUNT, id);
                     let done = Math.round((id + 1) / CHUNK_COUNT * 100, 0);
                     progress.textContent = `Uploaded: ${done}/100%`;
                 } catch (e) {
